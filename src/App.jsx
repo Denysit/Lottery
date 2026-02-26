@@ -104,9 +104,10 @@ const App = () => {
 									<span className="segment-value">{val}%</span>
 								</div>
 							))}
-							<div className="wheel-center-logo">
-								<img src={logo} alt="Logo" width={200} height={200} />
-							</div>
+
+						</div>
+						<div className="wheel-center-logo">
+							<img className="logo" src={logo} alt="Logo" width={250} height={240} />
 						</div>
 					</div>
 				</div>
