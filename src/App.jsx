@@ -2,19 +2,17 @@ import React, { useState, useRef } from "react";
 import confetti from "canvas-confetti";
 import "./App.css";
 import logo from "./assets/logo.png";
+import spinAudioFile from "./assets/Voicy_Casino_fruit_machine_handle_pull.mp3";
+import victoryAudioFile from "./assets/universfield-level-up-08-402152.mp3";
 
 const App = () => {
 	const [rotation, setRotation] = useState(0);
 	const [isSpinning, setIsSpinning] = useState(false);
 	const [prize, setPrize] = useState(null);
 	const [showModal, setShowModal] = useState(false);
+	const spinSound = useRef(new Audio(spinAudioFile));
+	const winSound = useRef(new Audio(victoryAudioFile));
 
-	const spinSound = useRef(
-		new Audio("https://www.soundjay.com/misc/sounds/wheel-fortune-1.mp3"),
-	);
-	const winSound = useRef(
-		new Audio("https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"),
-	);
 
 	const segments = [20, 15, 8, 10, 15, 50, 10, 15, 8, 10];
 
@@ -54,13 +52,23 @@ const App = () => {
 
 		setIsSpinning(true);
 		setRotation(totalRotation);
+		spinSound.current.currentTime = 0;
 		spinSound.current.play().catch(() => { });
+		setTimeout(() => {
+			spinSound.current.pause();
+			spinSound.current.currentTime = 0;
+		}, 4000);
 
 		setTimeout(() => {
 			setIsSpinning(false);
 			setPrize(winValue);
 			setShowModal(true);
+			winSound.current.currentTime = 0;
 			winSound.current.play().catch(() => { });
+			setTimeout(() => {
+				winSound.current.pause();
+				winSound.current.currentTime = 0;
+			}, 4000);
 			confetti({
 				particleCount: 150,
 				spread: 70,
