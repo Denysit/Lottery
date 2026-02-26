@@ -16,15 +16,27 @@ const App = () => {
 		new Audio("https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"),
 	);
 
-	const segments = [8, 15, 8, 10, 8, 20, 8, 15, 8, 10];
+	const segments = [20, 15, 8, 10, 15, 50, 10, 15, 8, 10];
 
 	const calculateResult = () => {
 		const rand = Math.random() * 100;
-		if (rand < 70) return 8;
-		if (rand < 85) return 10;
-		if (rand < 95) return 15;
-		return 20;
+
+		const probabilities = [
+			{ value: 50, chance: 0.1 },
+			{ value: 20, chance: 10 },
+			{ value: 15, chance: 22.9 },
+			{ value: 10, chance: 42 },
+			{ value: 8, chance: 25 },
+		];
+
+		let cumulative = 0;
+
+		for (let item of probabilities) {
+			cumulative += item.chance;
+			if (rand < cumulative) return item.value;
+		}
 	};
+
 
 	const spinWheel = () => {
 		if (isSpinning) return;
