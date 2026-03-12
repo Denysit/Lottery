@@ -5,6 +5,7 @@ import logo from "./assets/logo.png";
 import spinAudioFile from "./assets/Voicy_Casino_fruit_machine_handle_pull.mp3";
 import victoryAudioFile from "./assets/universfield-level-up-08-402152.mp3";
 
+
 const App = () => {
 	const [rotation, setRotation] = useState(0);
 	const [isSpinning, setIsSpinning] = useState(false);
@@ -19,20 +20,12 @@ const App = () => {
 	const calculateResult = () => {
 		const rand = Math.random() * 100;
 
-		const probabilities = [
-			{ value: 50, chance: 0.1 },
-			{ value: 20, chance: 10 },
-			{ value: 15, chance: 22.9 },
-			{ value: 10, chance: 42 },
-			{ value: 8, chance: 25 },
-		];
+		// 99% шанс
+		if (rand < 99) return 8;
 
-		let cumulative = 0;
-
-		for (let item of probabilities) {
-			cumulative += item.chance;
-			if (rand < cumulative) return item.value;
-		}
+		// 1% шанс на будь-яке інше число
+		const other = segments.filter(v => v !== 8);
+		return other[Math.floor(Math.random() * other.length)];
 	};
 
 
